@@ -1,0 +1,45 @@
+[project]
+name = "phognet"
+version = "0.1.0"
+description = "PHOG-Net: Interpretable hybrid CNN with embedded PHOG gradient histograms for medical image classification."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+authors = [{ name = "Your Name" }]
+dependencies = [
+  "numpy>=1.23",
+  "pyyaml>=6.0",
+  "tqdm>=4.66",
+  "pillow>=10.0",
+  "torch>=2.1",
+  "torchvision>=0.16",
+  "medmnist>=2.2",
+  "scikit-learn>=1.3",
+  "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7.4",
+  "pytest-cov>=4.1",
+  "ruff>=0.5",
+  "mypy>=1.8",
+  "pre-commit>=3.6",
+]
+mlops = [
+  "mlflow>=2.9",
+  "rich>=13.7",
+]
+
+[project.scripts]
+phognet = "phognet.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "PHOG-Net: An Interpretable and Efficient Hybrid CNN Framework for Medical Image Classification Using Gradient Histogram Integration"
+message: "If you use this software, please cite it."
+type: software
+authors:
+  - given-names: "First"
+    family-names: "Last"
+repository-code: "https://github.com/<org-or-user>/phog-net"
+license: "MIT"
+version: "0.1.0"
