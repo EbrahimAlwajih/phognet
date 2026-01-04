@@ -1,4 +1,4 @@
-name: Release
+name: Release (GitHub only)
 
 on:
   push:
@@ -6,8 +6,11 @@ on:
       - "v*"
 
 jobs:
-  build-and-upload:
+  build-and-release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -15,15 +18,27 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Build
+      - name: Install build tooling
         run: |
           python -m pip install --upgrade pip
           pip install build
+
+      - name: Build wheel + sdist (optional but useful)
+        run: |
           python -m build
 
-      - name: Upload release assets
+      - name: Create source zip (release asset)
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY##*/}"
+          TAG="${GITHUB_REF_NAME}"
+          ZIP_NAME="${REPO_NAME}-${TAG}.zip"
+          git archive --format=zip --output "${ZIP_NAME}" HEAD
+          echo "ZIP_NAME=${ZIP_NAME}" >> $GITHUB_ENV
+
+      - name: Create GitHub Release and upload assets
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            dist/*.whl
-            dist/*.tar.gz
+            dist/*
+            ${{ env.ZIP_NAME }}
+          generate_release_notes: true
