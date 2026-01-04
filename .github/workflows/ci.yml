@@ -10,43 +10,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Install (CPU-only torch + dev tools)
+      - name: Install (CPU-only torch + CI tools)
         run: |
           python -m pip install --upgrade pip
 
-          # CPU-only PyTorch
+          # CPU-only PyTorch (avoids huge CUDA nvidia-* deps)
           pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch torchvision
 
-          # Install project without deps (prevents CUDA torch)
+          # Install project without deps (prevents reinstalling torch)
           pip install --no-cache-dir -e . --no-deps
 
-          # Install runtime deps
+          # Runtime deps
           pip install --no-cache-dir numpy pyyaml tqdm pillow medmnist scikit-learn matplotlib
 
-          # Install dev deps needed by CI steps
+          # CI tools
           pip install --no-cache-dir ruff pytest pytest-cov
 
-              run: |
-                python -m pip install --upgrade pip
+      - name: Lint + Format Check
+        run: |
+          ruff check .
+          ruff format --check .
 
-                # Install CPU-only PyTorch + torchvision (avoids massive CUDA nvidia-* deps)
-                pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch torchvision
-
-                # Install this repo without pulling deps again (prevents CUDA torch reinstall)
-                pip install --no-cache-dir -e ".[dev]" --no-deps
-
-                # Install remaining runtime deps
-                pip install --no-cache-dir numpy pyyaml tqdm pillow medmnist scikit-learn matplotlib
-
-            - name: Lint + Format Check
-              run: |
-                ruff check .
-                ruff format --check .
-
-            - name: Tests
-              run: |
-                pytest -q
+      - name: Tests
+        run: |
+          pytest -q
