@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from typing import Tuple
-
 import numpy as np
 import torch
 import torch.nn as nn
@@ -31,7 +29,7 @@ def calc_accuracy(
     num_classes: int = 10,
     criterion: nn.Module | None = None,
     task: str = "multi-label, binary-class",
-) -> Tuple[float, float, float]:
+) -> tuple[float, float, float]:
     """Return (accuracy, loss, auc)."""
     if criterion is None:
         criterion = nn.CrossEntropyLoss()

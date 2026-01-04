@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 import os
-from typing import Tuple
-
 import medmnist
 import numpy as np
 import torch
@@ -71,66 +69,182 @@ def download_datasets(dataset: str, size: int = 32):
 
     if dataset == "mnist":
         transform = transforms.Compose(
-            [transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize(mean=(0.1307,), std=(0.3081,))]
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=(0.1307,), std=(0.3081,)),
+            ]
         )
-        train_dataset = datasets.MNIST(root="./data", train=True, download=True, transform=transform)
-        test_dataset = datasets.MNIST(root="./data", train=False, download=True, transform=transform)
+        train_dataset = datasets.MNIST(
+            root="./data", train=True, download=True, transform=transform
+        )
+        test_dataset = datasets.MNIST(
+            root="./data", train=False, download=True, transform=transform
+        )
     elif dataset == "FashionMNIST":
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
-        train_dataset = datasets.FashionMNIST(root="./data", train=True, download=True, transform=transform)
-        test_dataset = datasets.FashionMNIST(root="./data", train=False, download=True, transform=transform)
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
+        train_dataset = datasets.FashionMNIST(
+            root="./data", train=True, download=True, transform=transform
+        )
+        test_dataset = datasets.FashionMNIST(
+            root="./data", train=False, download=True, transform=transform
+        )
     elif dataset == "KMNIST":
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
-        train_dataset = datasets.KMNIST(root="./data", train=True, download=True, transform=transform)
-        test_dataset = datasets.KMNIST(root="./data", train=False, download=True, transform=transform)
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
+        train_dataset = datasets.KMNIST(
+            root="./data", train=True, download=True, transform=transform
+        )
+        test_dataset = datasets.KMNIST(
+            root="./data", train=False, download=True, transform=transform
+        )
     elif dataset == "QMNIST":
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
-        train_dataset = datasets.QMNIST(root="./data", train=True, download=True, transform=transform)
-        test_dataset = datasets.QMNIST(root="./data", train=False, download=True, transform=transform)
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
+        train_dataset = datasets.QMNIST(
+            root="./data", train=True, download=True, transform=transform
+        )
+        test_dataset = datasets.QMNIST(
+            root="./data", train=False, download=True, transform=transform
+        )
     elif dataset == "SVHN":
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
-        train_dataset = datasets.SVHN(root="./data", split="train", download=True, transform=transform)
-        test_dataset = datasets.SVHN(root="./data", split="test", download=True, transform=transform)
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
+        train_dataset = datasets.SVHN(
+            root="./data", split="train", download=True, transform=transform
+        )
+        test_dataset = datasets.SVHN(
+            root="./data", split="test", download=True, transform=transform
+        )
     elif dataset == "Places365":
         transform = transforms.Compose(
-            [transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))]
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
         )
-        train_dataset = datasets.Places365(root="./data", split="train-standard", download=True, transform=transform)
-        test_dataset = datasets.Places365(root="./data", split="val", download=True, transform=transform)
+        train_dataset = datasets.Places365(
+            root="./data", split="train-standard", download=True, transform=transform
+        )
+        test_dataset = datasets.Places365(
+            root="./data", split="val", download=True, transform=transform
+        )
     elif dataset == "STL10":
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
-        train_dataset = datasets.STL10(root="./data", split="train", download=True, transform=transform)
-        test_dataset = datasets.STL10(root="./data", split="test", download=True, transform=transform)
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
+        train_dataset = datasets.STL10(
+            root="./data", split="train", download=True, transform=transform
+        )
+        test_dataset = datasets.STL10(
+            root="./data", split="test", download=True, transform=transform
+        )
     elif dataset == "USPS":
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
         train_dataset = datasets.USPS(root="./data", train=True, download=True, transform=transform)
         test_dataset = datasets.USPS(root="./data", train=False, download=True, transform=transform)
     elif dataset == "Omniglot":
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
-        train_dataset = datasets.Omniglot(root="./data", background=True, download=True, transform=transform)
-        test_dataset = datasets.Omniglot(root="./data", background=False, download=True, transform=transform)
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
+        train_dataset = datasets.Omniglot(
+            root="./data", background=True, download=True, transform=transform
+        )
+        test_dataset = datasets.Omniglot(
+            root="./data", background=False, download=True, transform=transform
+        )
     elif dataset == "GTSRB":
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.5,), (0.5,))])
-        train_dataset = datasets.GTSRB(root="./data", split="train", download=True, transform=transform)
-        test_dataset = datasets.GTSRB(root="./data", split="test", download=True, transform=transform)
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.5,), (0.5,)),
+            ]
+        )
+        train_dataset = datasets.GTSRB(
+            root="./data", split="train", download=True, transform=transform
+        )
+        test_dataset = datasets.GTSRB(
+            root="./data", split="test", download=True, transform=transform
+        )
     elif dataset == "Food101":
         transform = transforms.Compose(
-            [transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))]
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+            ]
         )
-        train_dataset = datasets.Food101(root="./data", split="train", download=True, transform=transform)
-        test_dataset = datasets.Food101(root="./data", split="test", download=True, transform=transform)
+        train_dataset = datasets.Food101(
+            root="./data", split="train", download=True, transform=transform
+        )
+        test_dataset = datasets.Food101(
+            root="./data", split="test", download=True, transform=transform
+        )
     elif dataset == "cifar10":
         transform = transforms.Compose(
-            [transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))]
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261)),
+            ]
         )
-        train_dataset = datasets.CIFAR10(root="./data", train=True, download=True, transform=transform)
-        test_dataset = datasets.CIFAR10(root="./data", train=False, download=True, transform=transform)
+        train_dataset = datasets.CIFAR10(
+            root="./data", train=True, download=True, transform=transform
+        )
+        test_dataset = datasets.CIFAR10(
+            root="./data", train=False, download=True, transform=transform
+        )
     elif dataset == "cifar100":
         transform = transforms.Compose(
-            [transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261))]
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize((0.4914, 0.4822, 0.4465), (0.247, 0.243, 0.261)),
+            ]
         )
-        train_dataset = datasets.CIFAR100(root="./data", train=True, download=True, transform=transform)
-        test_dataset = datasets.CIFAR100(root="./data", train=False, download=True, transform=transform)
+        train_dataset = datasets.CIFAR100(
+            root="./data", train=True, download=True, transform=transform
+        )
+        test_dataset = datasets.CIFAR100(
+            root="./data", train=False, download=True, transform=transform
+        )
     elif dataset in [
         "pathmnist",
         "chestmnist",
@@ -147,7 +261,13 @@ def download_datasets(dataset: str, size: int = 32):
     ]:
         info = INFO[dataset]
         DataClass = getattr(medmnist, info["python_class"])
-        transform = transforms.Compose([transforms.Resize([size, size]), transforms.ToTensor(), transforms.Normalize(mean=[0.5], std=[0.5])])
+        transform = transforms.Compose(
+            [
+                transforms.Resize([size, size]),
+                transforms.ToTensor(),
+                transforms.Normalize(mean=[0.5], std=[0.5]),
+            ]
+        )
         train_dataset = CustomMedMNISTDataset(DataClass, split="train", transform=transform)
         test_dataset = CustomMedMNISTDataset(DataClass, split="test", transform=transform)
     else:
@@ -181,7 +301,9 @@ def convert_to_7_channels(image: np.ndarray) -> np.ndarray:
     gb_channel = (g_channel + b_channel) / 2.0
     rgb_channel = (r_channel + g_channel + b_channel) / 3.0
 
-    return np.stack((r_channel, g_channel, b_channel, rg_channel, rb_channel, gb_channel, rgb_channel), axis=0)
+    return np.stack(
+        (r_channel, g_channel, b_channel, rg_channel, rb_channel, gb_channel, rgb_channel), axis=0
+    )
 
 
 def convert_to_3_channels(image: np.ndarray) -> np.ndarray:
@@ -234,8 +356,12 @@ def prepare_datasets(dataset_name: str, img_size: int = 32, n_channel: int = 3):
     return train_dataset, test_dataset, num_classes, task
 
 
-def get_dataloaders(dataset_name: str, batch_size: int = 64, img_size: int = 32, n_channel: int = 3):
-    train_dataset, test_dataset, num_classes, task = prepare_datasets(dataset_name, img_size=img_size, n_channel=n_channel)
+def get_dataloaders(
+    dataset_name: str, batch_size: int = 64, img_size: int = 32, n_channel: int = 3
+):
+    train_dataset, test_dataset, num_classes, task = prepare_datasets(
+        dataset_name, img_size=img_size, n_channel=n_channel
+    )
 
     num_workers = min(4, max(0, (os.cpu_count() or 2) // 2))
     pin = True

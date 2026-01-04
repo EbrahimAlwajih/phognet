@@ -21,7 +21,9 @@ def ensure_run_dir(base_dir: str | Path, run_id: str) -> Path:
     return run_dir
 
 
-def save_config_yaml(run_dir: str | Path, config: dict[str, Any], filename: str = "config.yaml") -> None:
+def save_config_yaml(
+    run_dir: str | Path, config: dict[str, Any], filename: str = "config.yaml"
+) -> None:
     run_dir = Path(run_dir)
     (run_dir / filename).write_text(yaml.safe_dump(config, sort_keys=False), encoding="utf-8")
 
