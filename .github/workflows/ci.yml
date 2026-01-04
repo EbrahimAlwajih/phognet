@@ -14,24 +14,39 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install (CPU-only torch to avoid disk full)
+      - name: Install (CPU-only torch + dev tools)
         run: |
           python -m pip install --upgrade pip
 
-          # Install CPU-only PyTorch + torchvision (avoids massive CUDA nvidia-* deps)
+          # CPU-only PyTorch
           pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch torchvision
 
-          # Install this repo without pulling deps again (prevents CUDA torch reinstall)
-          pip install --no-cache-dir -e ".[dev]" --no-deps
+          # Install project without deps (prevents CUDA torch)
+          pip install --no-cache-dir -e . --no-deps
 
-          # Install remaining runtime deps
+          # Install runtime deps
           pip install --no-cache-dir numpy pyyaml tqdm pillow medmnist scikit-learn matplotlib
 
-      - name: Lint + Format Check
-        run: |
-          ruff check .
-          ruff format --check .
+          # Install dev deps needed by CI steps
+          pip install --no-cache-dir ruff pytest pytest-cov
 
-      - name: Tests
-        run: |
-          pytest -q
+              run: |
+                python -m pip install --upgrade pip
+
+                # Install CPU-only PyTorch + torchvision (avoids massive CUDA nvidia-* deps)
+                pip install --no-cache-dir --index-url https://download.pytorch.org/whl/cpu torch torchvision
+
+                # Install this repo without pulling deps again (prevents CUDA torch reinstall)
+                pip install --no-cache-dir -e ".[dev]" --no-deps
+
+                # Install remaining runtime deps
+                pip install --no-cache-dir numpy pyyaml tqdm pillow medmnist scikit-learn matplotlib
+
+            - name: Lint + Format Check
+              run: |
+                ruff check .
+                ruff format --check .
+
+            - name: Tests
+              run: |
+                pytest -q
