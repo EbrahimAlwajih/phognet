@@ -22,7 +22,7 @@ python scripts/train.py --config configs/train.yaml
 
 ## Ablation / sweep runner
 ```bash
-python scripts/run_ablation.py --dataset pathmnist --epochs 50 --batch_size 128 --img_size 32 --n_channel 3
+python scripts/run_ablation.py --dataset pathmnist --epochs 50 --batch_size 128 --img_size 128 --n_channel 3
 ```
 
 Outputs are written under `runs/<run_id>/` (checkpoints + metrics + environment snapshots).
