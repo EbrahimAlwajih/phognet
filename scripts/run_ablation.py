@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+
 os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 import argparse
@@ -19,7 +20,9 @@ from phognet.utils.run import ensure_run_dir, make_run_id, save_meta_json
 from phognet.utils.seed import seed_everything
 
 
-def get_optimizer(name: str, model: torch.nn.Module, lr: float, weight_decay: float, momentum: float):
+def get_optimizer(
+    name: str, model: torch.nn.Module, lr: float, weight_decay: float, momentum: float
+):
     name = name.lower()
     params = filter(lambda p: p.requires_grad, model.parameters())
     if name == "adam":
@@ -29,7 +32,9 @@ def get_optimizer(name: str, model: torch.nn.Module, lr: float, weight_decay: fl
     if name == "radam":
         return torch.optim.RAdam(params, lr=lr, weight_decay=weight_decay)
     if name == "sgd":
-        return torch.optim.SGD(params, lr=lr, momentum=momentum, weight_decay=weight_decay, nesterov=True)
+        return torch.optim.SGD(
+            params, lr=lr, momentum=momentum, weight_decay=weight_decay, nesterov=True
+        )
     raise ValueError(f"Unsupported optimizer: {name}")
 
 
@@ -66,7 +71,9 @@ def train_one(
     ).to(device)
 
     criterion = nn.BCEWithLogitsLoss() if dataset == "chestmnist" else nn.CrossEntropyLoss()
-    optimizer = get_optimizer(optimizer_name, model, lr=lr, weight_decay=weight_decay, momentum=momentum)
+    optimizer = get_optimizer(
+        optimizer_name, model, lr=lr, weight_decay=weight_decay, momentum=momentum
+    )
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[50, 75], gamma=0.1)
 
     early = DualMetricEarlyStopping(patience=patience, verbose=True, path=run_dir / "best.pt")
@@ -96,15 +103,27 @@ def train_one(
                 optimizer.zero_grad()
 
         acc_test, loss_test, auc_test = calc_accuracy(
-            model, loader=test_loader, device=device, num_classes=num_classes, criterion=criterion, task=task
+            model,
+            loader=test_loader,
+            device=device,
+            num_classes=num_classes,
+            criterion=criterion,
+            task=task,
         )
 
         torch.save(
-            {"epoch": epoch, "model_state_dict": model.state_dict(), "optimizer_state_dict": optimizer.state_dict(), "loss": loss_test},
+            {
+                "epoch": epoch,
+                "model_state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+                "loss": loss_test,
+            },
             last_ckpt,
         )
 
-        print(f"[{run_dir.name}] Epoch {epoch}: acc={acc_test:.4f} loss={loss_test:.4f} auc={auc_test:.4f}")
+        print(
+            f"[{run_dir.name}] Epoch {epoch}: acc={acc_test:.4f} loss={loss_test:.4f} auc={auc_test:.4f}"
+        )
 
         early(acc_test, auc_test, model, epoch)
         if early.early_stop:
@@ -152,17 +171,20 @@ def main() -> None:
         run_dir = ensure_run_dir(args.run_dir, f"{run_id}_{suffix}")
 
         # lineage
-        save_meta_json(run_dir, {
-            "project": args.project,
-            "dataset": dataset,
-            "seed": args.seed,
-            "bins": bins,
-            "levels": levels,
-            "n_channel": args.n_channel,
-            "img_size": args.img_size,
-            "batch_size": args.batch_size,
-            "ablation_case": ablation_case,
-        })
+        save_meta_json(
+            run_dir,
+            {
+                "project": args.project,
+                "dataset": dataset,
+                "seed": args.seed,
+                "bins": bins,
+                "levels": levels,
+                "n_channel": args.n_channel,
+                "img_size": args.img_size,
+                "batch_size": args.batch_size,
+                "ablation_case": ablation_case,
+            },
+        )
         write_versions_json(run_dir)
         write_pip_freeze(run_dir)
 

@@ -16,3 +16,6 @@ runs/
 *.onnx
 .DS_Store
 Thumbs.db
+# --- allow tracking package data loaders (Python package code) ---
+!src/phognet/data/
+!src/phognet/data/**

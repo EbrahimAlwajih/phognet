@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+
 os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 import argparse
@@ -12,7 +13,7 @@ import yaml
 from tqdm import tqdm
 
 from phognet.data.dataloaders import get_dataloaders
-from phognet.models.phognet import PHOGNet, PHOGProcessingBlock, PHOGNetAblation
+from phognet.models.phognet import PHOGNet, PHOGNetAblation, PHOGProcessingBlock
 from phognet.training.early_stopping import DualMetricEarlyStopping
 from phognet.training.metrics import calc_accuracy
 from phognet.utils.env import write_pip_freeze, write_versions_json
@@ -24,7 +25,9 @@ def load_config(path: str) -> dict:
     return yaml.safe_load(Path(path).read_text(encoding="utf-8"))
 
 
-def get_optimizer(name: str, model: torch.nn.Module, lr: float, weight_decay: float, momentum: float):
+def get_optimizer(
+    name: str, model: torch.nn.Module, lr: float, weight_decay: float, momentum: float
+):
     name = name.lower()
     params = filter(lambda p: p.requires_grad, model.parameters())
     if name == "adam":
@@ -34,7 +37,9 @@ def get_optimizer(name: str, model: torch.nn.Module, lr: float, weight_decay: fl
     if name == "radam":
         return torch.optim.RAdam(params, lr=lr, weight_decay=weight_decay)
     if name == "sgd":
-        return torch.optim.SGD(params, lr=lr, momentum=momentum, weight_decay=weight_decay, nesterov=True)
+        return torch.optim.SGD(
+            params, lr=lr, momentum=momentum, weight_decay=weight_decay, nesterov=True
+        )
     raise ValueError(f"Unsupported optimizer: {name}")
 
 
@@ -58,7 +63,10 @@ def main() -> None:
 
     # Run lineage
     save_config_yaml(run_dir, cfg)
-    save_meta_json(run_dir, {"project": project, "dataset": dataset, "seed": seed, "device": device, "run_id": run_id})
+    save_meta_json(
+        run_dir,
+        {"project": project, "dataset": dataset, "seed": seed, "device": device, "run_id": run_id},
+    )
     write_versions_json(run_dir)
     write_pip_freeze(run_dir)
 
@@ -66,7 +74,9 @@ def main() -> None:
     batch_size = int(cfg.get("batch_size", 128))
     img_size = int(cfg.get("img_size", 32))
     n_channel = int(cfg.get("n_channel", 3))
-    train_loader, test_loader, nInputPlane, num_classes, task = get_dataloaders(dataset, img_size=img_size, batch_size=batch_size, n_channel=n_channel)
+    train_loader, test_loader, nInputPlane, num_classes, task = get_dataloaders(
+        dataset, img_size=img_size, batch_size=batch_size, n_channel=n_channel
+    )
 
     # Model
     model_cfg = cfg.get("model", {})
@@ -76,9 +86,24 @@ def main() -> None:
     ablation_case = model_cfg.get("ablation_case", None)
 
     if ablation_case:
-        model = PHOGNetAblation(PHOGProcessingBlock, num_blocks, num_classes=num_classes, bins=bins, levels=levels, nInputPlane=nInputPlane, ablation_case=ablation_case)
+        model = PHOGNetAblation(
+            PHOGProcessingBlock,
+            num_blocks,
+            num_classes=num_classes,
+            bins=bins,
+            levels=levels,
+            nInputPlane=nInputPlane,
+            ablation_case=ablation_case,
+        )
     else:
-        model = PHOGNet(PHOGProcessingBlock, num_blocks, num_classes=num_classes, bins=bins, levels=levels, nInputPlane=nInputPlane)
+        model = PHOGNet(
+            PHOGProcessingBlock,
+            num_blocks,
+            num_classes=num_classes,
+            bins=bins,
+            levels=levels,
+            nInputPlane=nInputPlane,
+        )
 
     model.to(device)
 
@@ -95,7 +120,9 @@ def main() -> None:
     patience = int(train_cfg.get("patience", 10))
     accumulation_steps = int(train_cfg.get("accumulation_steps", 4))
 
-    optimizer = get_optimizer(optimizer_name, model, lr=lr, weight_decay=weight_decay, momentum=momentum)
+    optimizer = get_optimizer(
+        optimizer_name, model, lr=lr, weight_decay=weight_decay, momentum=momentum
+    )
     milestones = train_cfg.get("milestones", [50, 75])
     gamma = float(train_cfg.get("gamma", 0.1))
     scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=milestones, gamma=gamma)
@@ -127,11 +154,23 @@ def main() -> None:
                 optimizer.zero_grad()
 
         # Eval
-        acc_test, loss_test, auc_test = calc_accuracy(model, loader=test_loader, device=device, num_classes=num_classes, criterion=criterion, task=task)
+        acc_test, loss_test, auc_test = calc_accuracy(
+            model,
+            loader=test_loader,
+            device=device,
+            num_classes=num_classes,
+            criterion=criterion,
+            task=task,
+        )
 
         # Save last checkpoint
         torch.save(
-            {"epoch": epoch, "model_state_dict": model.state_dict(), "optimizer_state_dict": optimizer.state_dict(), "loss": loss_test},
+            {
+                "epoch": epoch,
+                "model_state_dict": model.state_dict(),
+                "optimizer_state_dict": optimizer.state_dict(),
+                "loss": loss_test,
+            },
             last_ckpt,
         )
 

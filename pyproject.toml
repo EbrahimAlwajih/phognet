@@ -43,3 +43,8 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.ruff.lint.per-file-ignores]
+"src/phognet/models/*.py" = ["UP008", "F401", "I001", "F841"]
+
+"scripts/*.py" = ["I001"]

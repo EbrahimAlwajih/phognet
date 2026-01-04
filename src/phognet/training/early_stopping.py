@@ -42,7 +42,9 @@ class DualMetricEarlyStopping:
         if improved:
             self.save_checkpoint(val_acc, val_auc, model, epoch)
 
-    def save_checkpoint(self, val_acc: float, val_auc: float, model: torch.nn.Module, epoch: int) -> None:
+    def save_checkpoint(
+        self, val_acc: float, val_auc: float, model: torch.nn.Module, epoch: int
+    ) -> None:
         if self.verbose:
             print(f"Epoch {epoch}: Saving model with accuracy {val_acc:.4f} and AUC {val_auc:.4f}.")
 

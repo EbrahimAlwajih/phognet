@@ -1,8 +1,8 @@
 from __future__ import annotations
 
+import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image
-import matplotlib.pyplot as plt
 
 
 def is_grayscale(image: Image.Image) -> bool:
