@@ -1,6 +1,6 @@
 [project]
 name = "phognet"
-version = "0.1.0"
+version = "0.1.1"
 description = "PHOG-Net: Interpretable hybrid CNN with embedded PHOG gradient histograms for medical image classification."
 readme = "README.md"
 requires-python = ">=3.10"

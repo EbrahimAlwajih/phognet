@@ -22,7 +22,7 @@ python scripts/train.py --config configs/train.yaml
 
 ## Ablation / sweep runner
 ```bash
-python scripts/run_ablation.py --dataset pathmnist --epochs 50 --batch_size 128 --img_size 32 --n_channel 3
+python scripts/run_ablation.py --dataset pathmnist --epochs 50 --batch_size 128 --img_size 128 --n_channel 3
 ```
 
 Outputs are written under `runs/<run_id>/` (checkpoints + metrics + environment snapshots).
@@ -30,5 +30,23 @@ Outputs are written under `runs/<run_id>/` (checkpoints + metrics + environment 
 ## Citation
 See `CITATION.cff`.
 
+<<<<<<< HEAD
+If you use this code in academic work, please cite the project as described in:
+
+```
+CITATION.cff
+```
+
+---
+
+## Releases
+
+Release artifacts and source archives are available at:
+
+[https://github.com/EbrahimAlwajih/phognet/releases](https://github.com/EbrahimAlwajih/phognet/releases)
+
+---
+=======
 ## GitHub Releases
 See `docs/RELEASES.md` (GitHub Releases only; no PyPI upload).
+>>>>>>> parent of 692e6b0 (update readme file)
