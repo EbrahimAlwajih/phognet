@@ -56,7 +56,3 @@ Release artifacts and source archives are available at:
 [https://github.com/EbrahimAlwajih/phognet/releases](https://github.com/EbrahimAlwajih/phognet/releases)
 
 ---
-=======
-## GitHub Releases
-See `docs/RELEASES.md` (GitHub Releases only; no PyPI upload).
->>>>>>> parent of 692e6b0 (update readme file)
