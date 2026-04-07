@@ -28,15 +28,18 @@ python scripts/run_ablation.py --dataset pathmnist --epochs 50 --batch_size 128 
 Outputs are written under `runs/<run_id>/` (checkpoints + metrics + environment snapshots).
 
 ## Citation
-See `CITATION.cff`.
 
-<<<<<<< HEAD
-If you use this code in academic work, please cite the project as described in:
-
-```
-CITATION.cff
-```
-
+@article{ALWAJIH2026115104,
+  title   = {PHOG-Net: An interpretable and efficient hybrid CNN framework for medical image classification using gradient histogram integration},
+  author  = {Ebrahim Al-Wajih and Muhammad Usman and Junaid Qadir},
+  journal = {Applied Soft Computing},
+  volume  = {196},
+  pages   = {115104},
+  year    = {2026},
+  issn    = {1568-4946},
+  doi     = {10.1016/j.asoc.2026.115104},
+  url     = {https://www.sciencedirect.com/science/article/pii/S1568494626005521}
+}
 ---
 
 ## Releases
