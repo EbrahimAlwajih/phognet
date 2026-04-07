@@ -29,6 +29,11 @@ Outputs are written under `runs/<run_id>/` (checkpoints + metrics + environment 
 
 ## Citation
 
+## Citation
+
+If you use this work, please cite:
+
+```bibtex
 @article{ALWAJIH2026115104,
   title   = {PHOG-Net: An interpretable and efficient hybrid CNN framework for medical image classification using gradient histogram integration},
   author  = {Ebrahim Al-Wajih and Muhammad Usman and Junaid Qadir},
@@ -40,6 +45,7 @@ Outputs are written under `runs/<run_id>/` (checkpoints + metrics + environment 
   doi     = {10.1016/j.asoc.2026.115104},
   url     = {https://www.sciencedirect.com/science/article/pii/S1568494626005521}
 }
+```
 
 ---
 
